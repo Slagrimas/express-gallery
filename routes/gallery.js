@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
       console.log(err)
     });
  });
+ 
 //gallery detail
  router.get('/gallery/:id', (req, res) => {
  console.log('ok, lets get this detail!')
@@ -34,6 +35,7 @@ router.get('/', (req, res) => {
  .catch(err => { console.log(err)});
  });
 
+ //add photo
 router.post('/gallery', (req, res) => {
   console.log('lets get a new photo shall we')
   const gallery = req.body;
