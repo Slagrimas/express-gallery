@@ -1,0 +1,35 @@
+version: '3'
+services:
+  express-server:
+    image: ${DOCKERHUB_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}-local
+    depends_on:
+      - postgres-primary-db
+    command: ["npm", "run", "dev"]
+    container_name: ${IMAGE_NAME}
+    volumes:
+      - ".:/app"
+      # - ./node_modules:/app/node_modules
+      - /app/node_modules
+    env_file: .env
+    environment:
+      NODE_ENV: development
+    ports:
+      - "${EXPRESS_HOST_PORT}:${EXPRESS_CONTAINER_PORT}"
+      - "3000:3000"
+      - "3001:3001"
+    networks:
+      - my-app-network
+  postgres-primary-db:
+    image: postgres:10.0-alpine
+    env_file: .env
+    volumes: 
+      - pg-data-volume:/var/lib/postgresql/data
+    ports: 
+      - '${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT}'
+    networks:
+      - my-app-network
+
+volumes: 
+  pg-data-volume:
+networks:
+  my-app-network:
