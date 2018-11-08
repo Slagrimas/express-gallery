@@ -1,0 +1,30 @@
+
+<div id="header">
+ <div id='title'>offroading</div>
+
+ <div id='bio'> Welcome to our online portfolio, we are truck enthusiast who enjoys offroading and the outdoors!</div>
+</div>
+
+<div id="pictures">
+ <div id="mainPhoto">
+   <a href="/gallery/{{featurePhoto.id}}">
+     <img id="featurePhoto" src="{{featurePhoto.link}}" alt="{{featurePhoto.description}}">
+   </a>
+   <p class="img-title">{{featurePhoto.description}}</p>
+   <p class="photoLink">{{featurePhoto.link}}</p>
+ </div>
+
+ {{#each galleryItems}}
+ <div id="photos">
+   <a href="/gallery/{{id}}">
+     <img class="otherPhotos" src="{{link}}" alt="{{description}}">
+   </a>
+   <p class="img-title">{{description}}</p>
+   <p class="photoLink">{{link}}</p>
+ </div>
+ {{/each}}
+
+</div>
+{{!-- 
+<a class="redirect" href="/gallery/new"><i class="far fa-image"></i> Add New Photo</a>
+<br><br> --}}

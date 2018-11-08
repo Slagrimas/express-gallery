@@ -1,20 +1,23 @@
 const express = require('express');
-const PORT = process.env.EXPRESS_HOST_PORT;
-const bodyParser = require('body-parser');
-
 const app = express();
+const PORT = process.env.EXPRESS_CONTAINER_PORT;
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
 
-// const userRouter = require('./routes/users');
-// const postRouter = require('./routes/post');
+
+//Linking gallery routes and authorization routes
+const galleryRoutes = require('./routes/gallery');
+const authRoutes = require('./routes/authRoutes')
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.use('/users', userRouter);
-// app.use('/posts', postRouter)
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs'}));
+app.set('view engine', '.hbs')
 
-app.get('/', (req, res) => {
-  res.send('smoke test');
-}); 
+app.use('/', galleryRoutes);
+app.use('/auth', authRoutes);
+
+
  
 app.listen(PORT, () => {
   process.stdout.write(`Server listening on port: ${PORT}`);

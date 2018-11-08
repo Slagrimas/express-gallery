@@ -5,6 +5,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "npx nodemon --legacy-watch app.js",
+    "db:migrate": "POSTGRES_HOSTNAME=localhost npx knex migrate:latest",
+    "db:rollback": "POSTGRES_HOSTNAME=localhost npx knex migrate:rollback",
+    "seed": "POSTGRES_HOSTNAME=localhost POSTGRES_CONTAINER_PORT=5432 npx knex seed:run",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
@@ -24,6 +27,7 @@
     "browser-sync": "^2.26.3",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.2",
     "knex": "^0.15.2",
