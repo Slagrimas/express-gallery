@@ -1,4 +1,4 @@
-console.log('duck duck = new duck()');
+console.log("you're not crazy");
 const express = require('express');
 const router = express.Router();
 // knex = require('../db/knex')
@@ -37,6 +37,20 @@ router.get('/', (req, res) => {
 router.post('/gallery', (req, res) => {
   console.log('lets get a new photo shall we')
   const gallery = req.body;
+  console.log('this is the gallery', gallery)
+  const newPhoto = {
+    author: req.body.author,
+    link: req.body.link,
+    description: req.body.description
+  }
+  Gallery
+  .forge(newPhoto)
+  .save()
+  .then( () => {
+    res.redirect('/')
+  })
+  .catch(err => {console.log(err)})
+});
 
-})
+
  module.exports = router;
