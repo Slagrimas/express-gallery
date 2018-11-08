@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars');
 
 
 //Linking gallery routes and authorization routes
+app.use(express.static('public'))
 const galleryRoutes = require('./routes/gallery');
 const authRoutes = require('./routes/authRoutes')
 

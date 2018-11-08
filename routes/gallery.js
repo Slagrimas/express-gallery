@@ -20,6 +20,11 @@ router.get('/', (req, res) => {
     });
  });
  
+ //get to new photo form
+ router.get('/gallery/new', (req, res) => {
+   res.render('new');
+ })
+
 //gallery detail
  router.get('/gallery/:id', (req, res) => {
  console.log('ok, lets get this detail!')
@@ -34,6 +39,7 @@ router.get('/', (req, res) => {
  })
  .catch(err => { console.log(err)});
  });
+
 
  //add photo
 router.post('/gallery', (req, res) => {
