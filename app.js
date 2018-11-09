@@ -18,6 +18,10 @@ app.set('view engine', '.hbs')
 app.use('/', galleryRoutes);
 app.use('/auth', authRoutes);
 
+app.get('*', (req, res)=>{
+  res.render('_404');
+})
+
 
  
 app.listen(PORT, () => {

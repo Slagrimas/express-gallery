@@ -1,7 +1,5 @@
-
 const express = require('express');
 const router = express.Router();
-// knex = require('../db/knex')
 
 const Gallery = require('../db/models/gallery_table');
 
@@ -20,6 +18,7 @@ router.get('/', (req, res) => {
     });
  });
 
+ 
  //get to edit form 
  router.get('/gallery/:id/edit', (req, res) => {
   console.log("\nThis is GET - /gallery/:id/edit");
