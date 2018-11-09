@@ -1,4 +1,4 @@
-console.log("you're not crazy");
+
 const express = require('express');
 const router = express.Router();
 // knex = require('../db/knex')
@@ -83,6 +83,7 @@ router.post('/gallery', (req, res) => {
   .catch(err => {console.log(err)})
 });
 
+//edit
 router.put('/gallery/:id', (req, res) => {
   console.log("This is PUT /gallery/:id");
  
@@ -107,4 +108,19 @@ router.put('/gallery/:id', (req, res) => {
     });
  });
 
+ router.delete('/gallery/:id', (req, res) => {
+  const { id } = req.params;
+ 
+  Gallery
+    .where("id", id)
+    .destroy()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => {
+      console.log('error, err');
+      res.redirect('/');
+    })
+ 
+ });
  module.exports = router;
