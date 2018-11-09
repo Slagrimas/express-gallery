@@ -19,7 +19,30 @@ router.get('/', (req, res) => {
       console.log(err)
     });
  });
+
+ //get to edit form 
+ router.get('/gallery/:id/edit', (req, res) => {
+  console.log("\nThis is GET - /gallery/:id/edit");
+  console.log("\nreq.params:", req.params);
  
+  const { id } = req.params;
+  console.log("\nid:", id)
+ 
+  Gallery
+    .where('id', id)
+    .fetch()
+    .then(results => {
+      console.log("results:", results.toJSON());
+      const photoToEdit = results.toJSON();
+      res.render('edit', photoToEdit);
+    })
+    .catch(err => {
+      console.log("Error retrieving photoToEdit", err);
+    })
+ 
+ });
+
+
  //get to new photo form
  router.get('/gallery/new', (req, res) => {
    res.render('new');
@@ -60,5 +83,28 @@ router.post('/gallery', (req, res) => {
   .catch(err => {console.log(err)})
 });
 
+router.put('/gallery/:id', (req, res) => {
+  console.log("This is PUT /gallery/:id");
+ 
+  const { id } = req.params;
+ 
+  const updatedPhoto = {
+    author: req.body.author,
+    link: req.body.link,
+    description: req.body.description
+  }
+ 
+  Gallery
+    .where('id', id)
+    .fetch()
+    .then(results => {
+      console.log("results:", results);
+      results.save(updatedPhoto);
+      res.redirect(`/gallery/${id}`);
+    })
+    .catch(err => {
+      console.log('error', err)
+    });
+ });
 
  module.exports = router;
