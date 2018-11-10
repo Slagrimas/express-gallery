@@ -7,10 +7,10 @@ const Gallery = require('../db/models/gallery_table');
 router.get('/', (req, res) => {
   console.log("This is GET /");
   Gallery
-    .fetchAll()
+    .fetchAll() 
     .then(results => {
       let galleryItems = results.toJSON(); 
-      // console.log("galleryItems:", galleryItems);
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", galleryItems);
       res.render('home', { galleryItems });
     })
     .catch(err => {
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     });
  });
 
- 
+
  //get to edit form 
  router.get('/gallery/:id/edit', (req, res) => {
   console.log("\nThis is GET - /gallery/:id/edit");

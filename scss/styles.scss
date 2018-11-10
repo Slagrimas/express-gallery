@@ -20,6 +20,7 @@ body{
   text-decoration: none;
  }
  
+ //apply the img to background img
  #bio{
   flex: 1 1 200px;
   font-size: 0.75em;
@@ -30,7 +31,7 @@ body{
   color: rgb(187, 185, 185);
  }
  
- /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ /*-------------------------------------------------------*/
  
  #pictures{
   display: flex;
@@ -89,7 +90,7 @@ body{
   font-size: 0.75em;
  }
  
- /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ /*---------------------------------------------------------------*/
  
  #singleImgDesc {
   margin: 0;
@@ -160,4 +161,25 @@ body{
 	filter: blur(20px);
 	opacity: 1;
 	animation: animate 8s linear infinite;
+}
+
+/*----------------------------------------------------*/
+
+#title{
+  color: white;
+}
+.formTitle{
+  color: white;
+}
+
+#loginForm{
+  border: 3px solid white;
+  padding: 2px;
+  color: white;
+}
+
+body{
+  background-image: url('http://s1.picswalls.com/wallpapers/2016/06/10/4k-desktop-wallpaper_065227602_309.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }

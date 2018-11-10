@@ -26,7 +26,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: #bbb9b9; }
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*-------------------------------------------------------*/
 #pictures {
   display: flex;
   flex-flow: row wrap; }
@@ -77,7 +77,7 @@ p {
   color: #bbb9b9;
   font-size: 0.75em; }
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*---------------------------------------------------------------*/
 #singleImgDesc {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -136,3 +136,20 @@ p {
   filter: blur(20px);
   opacity: 1;
   animation: animate 8s linear infinite; }
+
+/*----------------------------------------------------*/
+#title {
+  color: white; }
+
+.formTitle {
+  color: white; }
+
+#loginForm {
+  border: 3px solid white;
+  padding: 2px;
+  color: white; }
+
+body {
+  background-image: url("http://s1.picswalls.com/wallpapers/2016/06/10/4k-desktop-wallpaper_065227602_309.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; }
