@@ -11,9 +11,9 @@ passport.serializeUser((user, done) => {
     username: user.attributes.username,
     password: user.attributes.password
   });
- })
+})
 
- passport.deserializeUser((user, done) => {
+passport.deserializeUser((user, done) => {
   console.log("Deserializing user:", user);
   Users
     .where({ username: user.username })
@@ -25,8 +25,31 @@ passport.serializeUser((user, done) => {
     .catch(err => {
       done(err);
     })
- });
+});
 
+passport.use(new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
+  console.log("---> LocalStrategy is working...");
+  Users
+    .where({ username: username })
+    .fetch()
+    .then(user => {
+      console.log('---> LocalStrategy user:', user);
+      if (user.password === user.password) {
+        console.log("---> LocalStrategy result:", user.password);
+        console.log("---> User is authenticated.");
+        done(null, user);
+      }
+    //   else {
+    //     console.log("---> LocalStrategy result:", result);
+    //     done(null, false);
+    //   }
+    // })
+    // .catch(err => {
+    //   console.log("1st error:", err);
+    //   done(err);
+    // })
+    })
+}));
 
 //login 
 router.get('/login', (req, res) => {
@@ -37,10 +60,10 @@ router.get('/login', (req, res) => {
 //POST - /login, users login with username and password
 router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login' }), (req, res) => {
   //If passes LocalStrategy and serializing, then this block executes
-  res.send('You are authenticated.');
+  // res.send('You are authenticated.');
   console.log("You are authenticated.")
   res.redirect('/');
- })
+})
 
 
 
@@ -50,14 +73,16 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/l
 
 // custom middleware
 function isAuthenticated(req, res, next) {
-//  if it is authenticated then i will go to next middleware function in chain otherwise redirect to homepage. To use this, use router-level middleware
- if (req.isAuthenticated()) {
-   console.log("AUTHENTICATED!")
-   next();
- }
- else {
-   console.log("Not Authenticated.")
-   res.redirect('/login');
- }
+  //  if it is authenticated then i will go to next middleware function in chain otherwise redirect to homepage. To use this, use router-level middleware
+  if (req.isAuthenticated()) {
+    console.log("AUTHENTICATED!")
+    next();
+  }
+  else {
+    console.log("Not Authenticated.")
+    res.redirect('/login');
+  }
 }
+
 module.exports = router;
+

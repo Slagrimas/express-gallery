@@ -18,6 +18,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs')
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/', galleryRoutes);
+app.use('/auth', authRoutes);
 
 app.get('*', (req, res)=>{
   res.render('_404');
@@ -29,11 +34,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use('/', galleryRoutes);
-app.use('/auth', authRoutes);
 
  ///Listening//
 app.listen(PORT, () => {

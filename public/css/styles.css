@@ -138,18 +138,23 @@ p {
   animation: animate 8s linear infinite; }
 
 /*----------------------------------------------------*/
-#title {
-  color: white; }
-
 .formTitle {
-  color: white; }
+  color: black; }
 
 #loginForm {
-  border: 3px solid white;
-  padding: 2px;
-  color: white; }
+  border: 2px solid black;
+  padding: 150px;
+  color: black; }
 
-body {
-  background-image: url("http://s1.picswalls.com/wallpapers/2016/06/10/4k-desktop-wallpaper_065227602_309.jpg");
+#loginForm {
+  background-image: url("http://4kcarwallpapers.com/wp-content/uploads/2017/05/Desert-Race-Car-Offroad-Blur-background_1920x1080.jpg");
   background-repeat: no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  background-position: center;
+  background-color: black; }
+
+#username, #password {
+  border: 3px solid black; }
+
+.submitBtn {
+  border: 3px solid black; }
