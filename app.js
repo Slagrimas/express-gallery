@@ -6,10 +6,13 @@ const exphbs = require('express-handlebars');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session')
+const redis = require('connect-redis')(session);
 
 
 //Linking gallery routes and authorization routes
 app.use(express.static('public'))
+
+
 const galleryRoutes = require('./routes/gallery');
 const authRoutes = require('./routes/authRoutes')
 
@@ -29,6 +32,8 @@ app.get('*', (req, res)=>{
 })
 //session setup
 app.use(session({
+  store:new redis({url: 'redis://redis-server:6379', logErrors:
+true}),
   secret: 'cars are better',
   resave: false,
   saveUninitialized: true,

@@ -15,6 +15,7 @@ RUN npm install
 
 # Add the rest of the project files(most builds will start from here based on cache)
 COPY . .
+# RUN npx knex migrate:latest
 
 # Start the node application as you normally would
-CMD ["node", "app.js"]
+CMD ["node", "app.js"] 

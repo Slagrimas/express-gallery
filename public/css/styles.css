@@ -4,7 +4,6 @@ body {
 
 #header {
   display: flex;
-  flex-flow: row wrap;
   border-top: 2px lightgray solid;
   margin-bottom: 40px; }
 
@@ -35,15 +34,11 @@ body {
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 2px lightgray solid;
-  background-image: url("http://cacsw.org/wp-content/uploads/2017/11/2019-Toyota-Tacoma-off-road-4k-uhd-wallpaper.png");
+  background-image: url("https://icdn3.digitaltrends.com/image/2019_toyota_trd_pro_group_17_5189b3786867cf8f0e22f7e0670513d5076dd488-1200x630-c-ar1.91.jpg");
   background-position: center;
   background-size: 100% 100%;
   border: 1px lightgray solid;
   width: 40%; }
-
-#featurePhoto {
-  width: 100%;
-  height: 500px; }
 
 #photos {
   flex: 1 1 50px;
@@ -158,3 +153,18 @@ p {
 
 .submitBtn {
   border: 3px solid black; }
+
+#registerForm {
+  background-image: url("http://cacsw.org/wp-content/uploads/2017/11/2019-Toyota-Tacoma-off-road-4k-uhd-wallpaper.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: black; }
+
+#registerForm {
+  border: 2px solid black;
+  padding: 150px;
+  color: black; }
+
+.newnew, .reg {
+  display: inline; }

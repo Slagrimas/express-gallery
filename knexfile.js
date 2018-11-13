@@ -1,7 +1,7 @@
 // Update with your config settings.
 require('dotenv').config();
 const path = require('path')
-
+// console.log(process.env)
 module.exports = {
 
   development: {
@@ -10,7 +10,8 @@ module.exports = {
       host:     process.env.POSTGRES_HOSTNAME,
       database: process.env.POSTGRES_DB,
       user:     process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD
+      password: process.env.POSTGRES_PASSWORD,
+      port: process.env.POSTGRES_CONTAINER_PORT
     },
     pool: {
       min: 2,

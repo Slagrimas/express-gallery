@@ -1,4 +1,4 @@
-
+//old one
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('gallery', table => {
     table.increments();
