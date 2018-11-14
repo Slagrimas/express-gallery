@@ -34,7 +34,7 @@ body {
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 2px lightgray solid;
-  background-image: url("https://icdn3.digitaltrends.com/image/2019_toyota_trd_pro_group_17_5189b3786867cf8f0e22f7e0670513d5076dd488-1200x630-c-ar1.91.jpg");
+  background-image: url("https://i.ytimg.com/vi/NHooHTmpuuY/maxresdefault.jpg");
   background-position: center;
   background-size: 100% 100%;
   border: 1px lightgray solid;
@@ -142,7 +142,7 @@ p {
   color: black; }
 
 #loginForm {
-  background-image: url("http://4kcarwallpapers.com/wp-content/uploads/2017/05/Desert-Race-Car-Offroad-Blur-background_1920x1080.jpg");
+  background-image: url("https://wallpaper-house.com/data/out/7/wallpaper2you_148232.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -155,7 +155,7 @@ p {
   border: 3px solid black; }
 
 #registerForm {
-  background-image: url("http://cacsw.org/wp-content/uploads/2017/11/2019-Toyota-Tacoma-off-road-4k-uhd-wallpaper.png");
+  background-image: url("https://scontent-frt3-2.cdninstagram.com/vp/b16550f396ee6eec2cac861eb0fcb838/5C15274D/t51.2885-15/e35/38926184_1858967697524381_4415492406267346944_n.jpg?se=7&ig_cache_key=MTg0OTU5NTA1OTUyOTAyMTIyNA%3D%3D.2");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -168,3 +168,28 @@ p {
 
 .newnew, .reg {
   display: inline; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#newPhoto {
+  background-image: url("https://wallpapersite.com/images/wallpapers/toyota-hilux-tonka-2560x1440-concept-trucks-2017-6968.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; }
+
+.formTitle {
+  color: white; }
+
+label {
+  color: white; }
+
+.photoLink {
+  color: #bbb9b9;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif; }
+
+.photoLink:hover {
+  color: cornflowerblue; }
+
+.users-entries {
+  align-content: center;
+  text-align: center; }

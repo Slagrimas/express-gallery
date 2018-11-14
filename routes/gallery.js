@@ -108,18 +108,19 @@ router.put('/gallery/:id', (req, res) => {
 });
 
 router.delete('/gallery/:id', (req, res) => {
+  console.log('why is this thing broken?')
   const { id } = req.params;
 
   Gallery
-    .where("id", id)
-    .destroy()
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch(err => {
-      console.log('error, err');
-      res.redirect('/');
-    })
+  .where("id", id)
+  .destroy()
+  .then ( () => {
+    res.redirect('/');
+  })
+  .catch(err => {
+    console.log('error error')
+    res.redirect('/');
+  })
+})
 
-});
 module.exports = router;

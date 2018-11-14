@@ -12,10 +12,10 @@ passport.serializeUser((user, done) => {
     password: user.password,
     cat: 'nearly missed'
   });
- });
- 
- //Upon successful authorized request, we will take some information from the session to retrieve the user record from db and put it into req.user. 
- passport.deserializeUser((user, done) => {
+});
+
+//Upon successful authorized request, we will take some information from the session to retrieve the user record from db and put it into req.user. 
+passport.deserializeUser((user, done) => {
   console.log("\nDeserializing user:\n", user);
   Users
     .where({ username: user.username })
@@ -27,7 +27,7 @@ passport.serializeUser((user, done) => {
     .catch(err => {
       done(err);
     })
- });
+});
 //ok that is clear.
 //make sure my password is matching with my database.
 passport.use(new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
@@ -42,8 +42,8 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
         .then(result => {
           console.log("Compare - password:", password);
           console.log("Compare - localstrategy password:", user.password);
-          console.log("LocalStrategy Result:", result);
 
+          console.log("LocalStrategy Result:", result);
           if (result) {
             console.log("---> LocalStrategy result:", result);
             console.log("---> User is authenticated.");
@@ -60,6 +60,29 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
         })
     })
 }));
+//get all users
+//The map() method creates a new array with the results of calling a provided function on every element in the calling array.
+router.get('/users', (req, res) => {
+  return Users
+    .fetchAll()
+    .then(user => {
+      let usersArr = user.map(element => {
+        return element.attributes;
+      });
+      if (!user) {
+        return res.json({ message: 'there is no users' });
+      } else {
+        res.render('users/home', {
+          users: usersArr,
+          id: usersArr[0].id
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      return res.json({ message: 'there was an error' });
+    });
+});
 
 //login 
 router.get('/login', (req, res) => {
@@ -71,12 +94,18 @@ router.get('/register', (req, res) => {
   console.log('This is GET - /auth/register');
   let isRegistering = true;
   res.render('register', { isRegistering });
- })
+})
+
+// router.get('/logout', (req, res) => {
+//   console.log('\nThis is POST - /auth/logout');
+//   req.logout();
+//   console.log('You have been logged out.');
+//   res.redirect('/login');
+// });
 
 //POST - /login, users login with username and password
 router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login' }), (req, res) => {
-  //If passes LocalStrategy and serializing, then this block executes
-  // res.send('You are authenticated.');
+  //If passes LocalStra tegy and serializing, then this block executes
   console.log("You are authenticated.")
   res.redirect('/');
 })
@@ -110,6 +139,8 @@ router.post('/register', (req, res) => {
       res.send(err);
     })
 });
+
+
 
 
 module.exports = router;
