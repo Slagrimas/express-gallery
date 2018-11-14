@@ -45,17 +45,13 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
 
           console.log("LocalStrategy Result:", result);
           if (result) {
-            console.log("---> LocalStrategy result:", result);
-            console.log("---> User is authenticated.");
             done(null, user);
           }
           else {
-            console.log("---> LocalStrategy result:", result);
             done(null, false);
           }
         })
         .catch(err => {
-          console.log("1st error:");
           done(err);
         })
     })
@@ -84,6 +80,21 @@ router.get('/users', (req, res) => {
     });
 });
 
+//get a single user
+router.get('/users/:id', (req, res) => {
+  console.log('ok, lets get this detail!')
+  const { id } = req.params;
+  Users
+    .where('id', id)
+    .fetch()
+    .then(results => {
+      const UserInfo = results.toJSON();
+      console.log(UserInfo);
+      res.render('users/user');
+    })
+    .catch(err => { console.log(err) });
+});
+
 //login 
 router.get('/login', (req, res) => {
   console.log('this is get - auth/login')
@@ -96,16 +107,22 @@ router.get('/register', (req, res) => {
   res.render('register', { isRegistering });
 })
 
-// router.get('/logout', (req, res) => {
-//   console.log('\nThis is POST - /auth/logout');
-//   req.logout();
-//   console.log('You have been logged out.');
-//   res.redirect('/login');
-// });
+//Used to keep track of sessions to check if a user is logged in or not. Use logic to determine this
+router.get('/protected', isAuthenticated, (req, res) => {
+  console.log('\nThis is GET - /auth/protected');
+  // res.render('My Cool Dashboard', { user: req.user });
+});
+
+router.get('/logout', (req, res) => {
+  console.log('\nThis is POST - /auth/logout');
+  req.logout();
+  console.log('You have been logged out.');
+  res.send({ message: 'you have been logged out🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪'})
+});
 
 //POST - /login, users login with username and password
 router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login' }), (req, res) => {
-  //If passes LocalStra tegy and serializing, then this block executes
+  //If passes LocalStrat tegy and serializing, then this block executes
   console.log("You are authenticated.")
   res.redirect('/');
 })
@@ -140,8 +157,18 @@ router.post('/register', (req, res) => {
     })
 });
 
-
-
+//custom middleware
+function isAuthenticated(req, res, next) {
+  //if it is authenticated then i will go to next middleware function in chain otherwise redirect to homepage. To use this, use router-level middleware
+  if (req.isAuthenticated()) {
+    console.log("AUTHENTICATED!")
+    next();
+  }
+  else {
+    console.log("Not Authenticated.")
+    res.redirect('login');
+  }
+}
 
 module.exports = router;
 
