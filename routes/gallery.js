@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Gallery = require('../db/models/gallery_table');
-
+const User = require('../db/models/users_table')
 //Get Home Route 
 router.get('/', (req, res) => {
   Gallery
@@ -31,6 +31,7 @@ router.get('/gallery/:id/edit', (req, res) => {
     .fetch()
     .then(results => {
       console.log("results:", results.toJSON());
+      
       const photoToEdit = results.toJSON();
       res.render('edit', photoToEdit);
     })
@@ -70,8 +71,10 @@ router.post('/gallery', (req, res) => {
   console.log('this is the gallery', gallery)
   const newPhoto = {
     author: req.body.author,
+    author_id: req.body.author_id,
     link: req.body.link,
     description: req.body.description
+
   }
   Gallery
     .forge(newPhoto)
@@ -87,18 +90,18 @@ router.put('/gallery/:id', (req, res) => {
   console.log("This is PUT /gallery/:id");
 
   const { id } = req.params;
-
+  
   const updatedPhoto = {
     author: req.body.author,
+    author_id: req.body.author_id,
     link: req.body.link,
     description: req.body.description
   }
-
   Gallery
-    .where('id', id)
-    .fetch()
-    .then(results => {
-      console.log("results:", results);
+  .where('id', id)
+  .fetch()
+  .then(results => {
+    console.log("results:", results);
       results.save(updatedPhoto);
       res.redirect(`/gallery/${id}`);
     })

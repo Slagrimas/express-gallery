@@ -39,8 +39,7 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
     .where({ username })
     .fetch()
     .then(user => {
-      console.log('---> LocalStrategy user:', user);
-
+      console.log('---> LocalStrategy user:', user.attributes);
       bcrypt.compare(password, user.attributes.password)
         .then(result => {
           console.log("Compare - password:", password);
