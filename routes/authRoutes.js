@@ -8,28 +8,31 @@ const bcrypt = require('bcrypt');
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user);
   done(null, {
-    username: user.username,
-    password: user.password,
-    cat: 'nearly missed'
+    username: user.username
+    // password: user.password,
+    // cat: 'nearly missed'
   });
 });
 
 //Upon successful authorized request, we will take some information from the session to retrieve the user record from db and put it into req.user. 
+
 passport.deserializeUser((user, done) => {
-  console.log("\nDeserializing user:\n", user);
+  debugger
+  console.log("\nDeserializing user:\n", user)
   Users
     .where({ username: user.username })
     .fetch()
     .then(user => {
-      //When you access a protected route, it throws your object into req.user
-      done(null, user)
+      console.log('----------', user)
+      //When you access a session route, it throws your object into req.user
+      done(null, user.attributes)
     })
     .catch(err => {
       done(err);
     })
 });
-//ok that is clear.
-//make sure my password is matching with my database.
+
+//This finds the user and if it doesn't find the user then it will give an error
 passport.use(new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
   console.log("---> LocalStrategy is working...");
   Users
@@ -41,21 +44,30 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
       bcrypt.compare(password, user.attributes.password)
         .then(result => {
           console.log("Compare - password:", password);
-          console.log("Compare - localstrategy password:", user.password);
-
+          console.log("Compare - localstrategy password:", user.attributes.password);
           console.log("LocalStrategy Result:", result);
+
           if (result) {
-            done(null, user);
+            console.log("---> LocalStrategy result:", result);
+            console.log("---> User is authenticated.");
+            done(null, user.attributes);
           }
           else {
+            console.log("---> LocalStrategy result:", result);
             done(null, false);
           }
         })
         .catch(err => {
+          console.log("1st error:", err);
           done(err);
         })
     })
+    .catch(err => {
+      console.log("2nd error:", err);
+      done(err);
+    })
 }));
+
 //get all users
 //The map() method creates a new array with the results of calling a provided function on every element in the calling array.
 router.get('/users', (req, res) => {
@@ -107,9 +119,10 @@ router.get('/register', (req, res) => {
   res.render('register', { isRegistering });
 })
 
-//Used to keep track of sessions to check if a user is logged in or not. Use logic to determine this
-router.get('/protected', isAuthenticated, (req, res) => {
+//Used to keep track of sessions to check if a user is logged in or not.
+router.get('/session', isAuthenticated, (req, res) => {
   console.log('\nThis is GET - /auth/protected');
+  res.send('You are auth')
   // res.render('My Cool Dashboard', { user: req.user });
 });
 
@@ -160,6 +173,7 @@ router.post('/register', (req, res) => {
 //custom middleware
 function isAuthenticated(req, res, next) {
   //if it is authenticated then i will go to next middleware function in chain otherwise redirect to homepage. To use this, use router-level middleware
+  console.log('!!!!!!!!!!!', req.user);
   if (req.isAuthenticated()) {
     console.log("AUTHENTICATED!")
     next();

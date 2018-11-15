@@ -13,8 +13,6 @@ const redis = require('connect-redis')(session);
 app.use(express.static('public'))
 
 
-const galleryRoutes = require('./routes/gallery');
-const authRoutes = require('./routes/authRoutes')
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -24,23 +22,28 @@ app.set('view engine', '.hbs')
 //Setup for method-override
 app.use(methodOverride('_method'));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/', galleryRoutes);
-app.use('/auth', authRoutes);
-
-app.get('*', (req, res)=>{
-  res.render('_404');
-})
 //session setup
 app.use(session({
   store:new redis({url: 'redis://redis-server:6379', logErrors:
-true}),
+  true}),
   secret: 'cars are better',
   resave: false,
   saveUninitialized: true,
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const galleryRoutes = require('./routes/gallery');
+const authRoutes = require('./routes/authRoutes');
+
+app.use('/', galleryRoutes);
+app.use('/auth', authRoutes);
+
+//404 setup
+app.get('*', (req, res)=>{
+  res.render('_404');
+})
 
 
 
