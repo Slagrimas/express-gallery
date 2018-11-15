@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const Gallery = require('../db/models/gallery_table');
-const User = require('../db/models/users_table')
+const User = require('../db/models/users_table');
+
 //Get Home Route 
 router.get('/', (req, res) => {
   Gallery
@@ -24,6 +25,7 @@ router.get('/gallery/:id/edit', (req, res) => {
   console.log("\nreq.params:", req.params);
 
   const { id } = req.params;
+
   console.log("\nid:", id)
 
   Gallery
@@ -31,9 +33,14 @@ router.get('/gallery/:id/edit', (req, res) => {
     .fetch()
     .then(results => {
       console.log("results:", results.toJSON());
-      
       const photoToEdit = results.toJSON();
-      res.render('edit', photoToEdit);
+      console.log('?????????????????', photoToEdit);
+      // console.log('yeeeeeeeeeehaw', photoToEdit.author_id, req.user.id)
+      if (photoToEdit.author_id === req.user.id) {
+        res.render('edit', photoToEdit);
+      } else {
+        res.send( {message: 'You Are Prohibited, from trying to edit this photo.' } )
+      }
     })
     .catch(err => {
       console.log("Error retrieving photoToEdit", err);
@@ -50,13 +57,17 @@ router.get('/gallery/new', (req, res) => {
 //gallery detail
 router.get('/gallery/:id', (req, res) => {
   console.log('ok, lets get this detail!')
+
   const { id } = req.params;
   Gallery
     .where('id', id)
     .fetch()
     .then(results => {
       const galleryPhoto = results.toJSON();
-      console.log(galleryPhoto);
+      // console.log('MATCHHHHH', req.user.id, galleryPhoto.author_id)
+      if (req.user.id === galleryPhoto.author_id) {
+        galleryPhoto.isAuthor = true;
+      }
       res.render('galleryPhoto', galleryPhoto);
     })
     .catch(err => { console.log(err) });
@@ -90,7 +101,7 @@ router.put('/gallery/:id', (req, res) => {
   console.log("This is PUT /gallery/:id");
 
   const { id } = req.params;
-  
+
   const updatedPhoto = {
     author: req.body.author,
     author_id: req.body.author_id,
@@ -98,10 +109,10 @@ router.put('/gallery/:id', (req, res) => {
     description: req.body.description
   }
   Gallery
-  .where('id', id)
-  .fetch()
-  .then(results => {
-    console.log("results:", results);
+    .where('id', id)
+    .fetch()
+    .then(results => {
+      console.log("results:", results);
       results.save(updatedPhoto);
       res.redirect(`/gallery/${id}`);
     })

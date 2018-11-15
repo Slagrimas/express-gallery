@@ -8,8 +8,8 @@ const bcrypt = require('bcrypt');
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user);
   done(null, {
-    username: user.username
-    // password: user.password,
+    username: user.username,
+    // password: user.password
     // cat: 'nearly missed'
   });
 });
@@ -17,7 +17,6 @@ passport.serializeUser((user, done) => {
 //Upon successful authorized request, we will take some information from the session to retrieve the user record from db and put it into req.user. 
 
 passport.deserializeUser((user, done) => {
-  debugger
   console.log("\nDeserializing user:\n", user)
   Users
     .where({ username: user.username })
@@ -60,10 +59,6 @@ passport.use(new LocalStrategy({ usernameField: 'username' }, (username, passwor
           console.log("1st error:", err);
           done(err);
         })
-    })
-    .catch(err => {
-      console.log("2nd error:", err);
-      done(err);
     })
 }));
 

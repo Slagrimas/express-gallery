@@ -10,9 +10,11 @@
  <img id="singleImg" src={{link}} alt="{{description}}">
 </div>
 
-<br><br>
+<br><br> 
+{{#if isAuthor}}
 <a class="redirect" href="/gallery/{{id}}/edit"><i class="fas fa-pencil-alt"></i> Edit Photo</a>
 <br><br>
+{{/if}}
 
 <a class="redirect" href="/"><i class="fas fa-angle-double-left"></i> Back to gallery</a>
 
